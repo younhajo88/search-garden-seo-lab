@@ -2,6 +2,8 @@
 
 Next.js 사이트를 Vercel에 배포하고 Google 검색 노출 과정을 관찰하기 위한 학습 프로젝트입니다.
 
+구현 규칙과 짧은 예제는 [Next.js SEO 기본 가이드](docs/NEXTJS_SEO_GUIDE.md)에서 확인할 수 있습니다.
+
 ## 로컬 실행
 
 ```bash
