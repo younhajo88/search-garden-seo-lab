@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 검색정원 SEO 실험실
 
-## Getting Started
+Next.js 사이트를 Vercel에 배포하고 Google 검색 노출 과정을 관찰하기 위한 학습 프로젝트입니다.
 
-First, run the development server:
+## 로컬 실행
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 배포 전에 설정할 환경 변수
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Vercel 프로젝트의 Settings > Environment Variables에서 아래 값을 실제 서비스 주소로 설정합니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+NEXT_PUBLIC_SITE_URL=https://your-project.vercel.app
+```
 
-## Learn More
+도메인을 연결하면 값을 새 도메인으로 바꾸고 다시 배포합니다. 이 값은 canonical URL, sitemap.xml, robots.txt, JSON-LD에 사용됩니다.
 
-To learn more about Next.js, take a look at the following resources:
+## 첫 배포 후 확인
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+아래 주소가 외부에서 열리는지 확인합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```text
+https://your-project.vercel.app/
+https://your-project.vercel.app/sitemap.xml
+https://your-project.vercel.app/robots.txt
+https://your-project.vercel.app/guides
+```
 
-## Deploy on Vercel
+그 다음 [Google Search Console](https://search.google.com/search-console/)에 사이트를 등록하고 `sitemap.xml`을 제출합니다. URL 검사에서 홈과 가이드 글 하나의 색인 생성을 요청합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 검색 관찰 기록
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| 확인 날짜 | `site:` 검색 | 고유 문구 검색 | Search Console 상태 | 변경 사항 |
+| --- | --- | --- | --- | --- |
+| 2026-06-02 | 배포 전 | 배포 전 | 미등록 | 프로젝트 생성 |
+
+고유 문구는 `검색정원 SEO 실험실`을 사용합니다. 검색 반영에는 시간이 걸릴 수 있으므로 주 1회 같은 조건으로 확인합니다.

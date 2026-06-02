@@ -1,65 +1,87 @@
-import Image from "next/image";
+import Link from "next/link";
+import { guides } from "@/data/guides";
+import { JsonLd } from "@/components/json-ld";
+import { getSiteUrl } from "@/lib/site";
 
 export default function Home() {
+  const siteUrl = getSiteUrl();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "검색정원 SEO 실험실",
+          url: siteUrl,
+          description:
+            "Next.js 사이트가 Google 검색에 노출되는 과정을 직접 기록하는 초보자용 SEO 실험 노트",
+        }}
+      />
+      <section className="hero">
+        <p className="eyebrow">NEXT.JS SEO FIELD NOTES</p>
+        <h1>
+          검색 결과에 싹이 트는지,
+          <br />
+          직접 확인합니다.
+        </h1>
+        <p className="hero-copy">
+          검색정원 SEO 실험실은 Next.js 사이트를 만들고 Google에 발견되는
+          과정을 기록합니다. 어려운 용어보다 실제 확인 순서를 남깁니다.
+        </p>
+        <div className="hero-actions">
+          <Link className="button primary" href="/guides">
+            실험 노트 읽기
+          </Link>
+          <Link className="button secondary" href="/about">
+            관찰 방법 보기
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      <section className="signal-grid" aria-label="SEO 실험의 핵심 원칙">
+        <article>
+          <span>01</span>
+          <h2>발견 가능하게</h2>
+          <p>sitemap과 내부 링크로 검색 로봇이 페이지를 찾을 길을 만듭니다.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>이해 가능하게</h2>
+          <p>페이지마다 제목, 설명, 구조화 데이터를 명확하게 작성합니다.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>측정 가능하게</h2>
+          <p>배포일과 색인 확인일을 기록하고 Search Console에서 비교합니다.</p>
+        </article>
+      </section>
+
+      <section className="section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">LATEST NOTES</p>
+            <h2>처음 읽을 실험 노트</h2>
+          </div>
+          <Link href="/guides">전체 노트 보기 →</Link>
         </div>
-      </main>
-    </div>
+        <div className="card-grid">
+          {guides.map((guide) => (
+            <article className="guide-card" key={guide.slug}>
+              <p className="card-meta">
+                {guide.category} · {guide.readingTime}
+              </p>
+              <h3>
+                <Link href={`/guides/${guide.slug}`}>{guide.title}</Link>
+              </h3>
+              <p>{guide.description}</p>
+              <Link className="text-link" href={`/guides/${guide.slug}`}>
+                노트 읽기 →
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
